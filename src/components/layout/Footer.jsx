@@ -2,6 +2,7 @@
 import TelIcon from "../../assets/tel.svg"
 import EmailIcon from "../../assets/email.svg"
 import TelegramIcon from "../../assets/telegram.svg"
+import Button from "../UI/Button/Button"
 
 const icons = [TelIcon, EmailIcon, TelegramIcon]
 
@@ -32,7 +33,9 @@ const Footer = () => {
                             </div>
                         })}
                     </div>
-                    <button>Написать в чате</button>
+                    <Button className={"py-[5px] px-[20px]"}>
+                        Написать в чате
+                    </Button>
                 </div>
             </div>
             <div></div>
