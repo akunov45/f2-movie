@@ -1,5 +1,6 @@
 import Layout from "../components/layout/Layout";
 import HomePage from "../pages/home-page/HomePage";
+import MovieDetailPage from "../pages/movie-detail-page/MovieDetailPage";
 
 export const menu = [
     {
@@ -14,7 +15,7 @@ export const menu = [
             },
             {
                 path: "/movie-detail/:movieId",
-                element: null
+                element: <MovieDetailPage />
             },
             {
                 path: "/auth",
