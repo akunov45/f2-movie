@@ -23,7 +23,7 @@ const HeroSection = () => {
         movieService.fetchAllMovies()
             .then(res => {
                 console.log(res);
-                setFilms(res.results.slice(0, 4))
+                setFilms(res.results.slice(0, 6))
                 setBgImage(res.results[0].backdrop_path)
             })
             .finally(() => {
@@ -43,6 +43,7 @@ const HeroSection = () => {
                 <Swiper
                     cssMode={true}
                     navigation={true}
+                    loop={true}
                     pagination={{
                         clickable: true,
                         el: ".custom-pagination",
