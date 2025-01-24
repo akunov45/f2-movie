@@ -29,8 +29,8 @@ const CategorySection = () => {
     return (
         <div className="pb-[150px] text-white">
             <div className="app-container">
-                <h3>Смотрите фильмы, которые вам нравятся</h3>
-                <p>На нашем сайте собрано огромное количество фильмов и сериалов на любой вкус</p>
+                <h3 className="mb-[15px] text-[24px]">Смотрите фильмы, которые вам нравятся</h3>
+                <p className="w-[398px] mb-[60px]">На нашем сайте собрано огромное количество фильмов и сериалов на любой вкус</p>
                 <div>
                     <Swiper
                         slidesPerView={3}

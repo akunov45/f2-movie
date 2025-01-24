@@ -7,12 +7,12 @@ const App = () => {
     <div>
       <BrowserRouter >
         <Routes>
-          {menu.map(route => {
+          {menu.map((route, i) => {
             return (
-              <Route key={route.name} path={route.path} element={route.element}>
-                {route.children.map(route2 => {
+              <Route key={i} path={route.path} element={route.element}>
+                {route.children.map((route2 , i) => {
                   return <Route
-                    key={route2.path}
+                    key={i}
                     index={route2.index}
                     path={route2.path}
                     element={route2.element} />

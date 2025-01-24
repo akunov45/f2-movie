@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
-import movieService from "../../service/movieServie"
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import movieService from "../../service/movieServie";
 // Import Swiper styles
+import { useNavigate } from "react-router";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination, Mousewheel, Keyboard, Autoplay } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import PlayIcon from "../../assets/play.svg";
 import Spinner from "../spinner/Spinner";
 import Button from "../UI/Button/Button";
-import PlayIcon from "../../assets/play.svg"
-import { useNavigate } from "react-router"
 
 const HeroSection = () => {
     const [films, setFilms] = useState([])
@@ -41,23 +41,18 @@ const HeroSection = () => {
             style={{ backgroundImage: `url(${imgUrl}${bgImage})` }}>
             <div className="h-[700px] relative   text-white">
                 <Swiper
-                    cssMode={true}
                     navigation={true}
-                    loop={true}
+                    loop={films.length > 1}
                     pagination={{
                         clickable: true,
                         el: ".custom-pagination",
                         type: 'bullets'
                     }}
-                    mousewheel={true}
-                    keyboard={true}
-                    autoplay={{
-                        delay: 5500
-                    }}
-                    modules={[Navigation, Pagination, Autoplay, Mousewheel, Keyboard]}
+                    autoplay={films.length > 1 ? { delay: 5500 } : false}
+                    modules={[Navigation, Pagination, Autoplay]}
                     className="mySwiper h-full bg-gradient-to-t from-[#040404] to-transparen"
                     onSlideChange={(swiper) => {
-                        setBgImage(films[swiper.activeIndex]?.backdrop_path);
+                        setBgImage(films[swiper.realIndex]?.backdrop_path);
                     }}
                 >
                     {films.map(item => {

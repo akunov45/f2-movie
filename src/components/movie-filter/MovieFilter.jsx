@@ -1,6 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import movieService from "../../service/movieServie"
-import { HiH3 } from "react-icons/hi2"
+import Spinner from "../spinner/Spinner"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Autoplay, Navigation } from "swiper/modules"
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 const filterNames = [
     "Новинки",
@@ -14,6 +18,7 @@ const filterNames = [
 const MovieFilter = () => {
     const [activeBtn, setActiveBtn] = useState("Новинки")
     const [movies, setMovies] = useState([])
+    const [loading, setLoading] = useState(true)
 
     const handleOnClick = (item) => {
         setActiveBtn(item)
@@ -32,6 +37,13 @@ const MovieFilter = () => {
         }
     }
 
+    useEffect(() => {
+        movieService.fetchNewMovie()
+            .then(({ results }) => setMovies(results))
+            .finally(() => setLoading(false))
+    }, [])
+
+
     return (
         <div className="pb-[80px]">
             <div className="app-container flex gap-[75px] items-center  px-[75px]  rounded-[10px] bg-[#1A1A1A] text-white">
@@ -45,15 +57,38 @@ const MovieFilter = () => {
                 })}
             </div>
 
-            <div className="app-container">
-                {movies.length === 0 ? <h3 className="text-white">Loading...</h3> : (
-                    movies.map(film => {
-                        let imgUrl = 'https://image.tmdb.org/t/p/original/'
-                        return <div key={film.id}>
-                            <img width={180} src={imgUrl + film.poster_path} alt="" />
-                            <h2 className="text-white">{film.title}</h2>
-                        </div>
-                    })
+            <div className="app-container pt-[80px]">
+                {loading ? <Spinner /> : (
+                    <div className="w-[1050px] mx-auto">
+                        <Swiper
+                            slidesPerView={4}
+                            spaceBetween={20}
+                            autoplay={{
+                                delay: 3000
+                            }}
+                            navigation={true}
+                            modules={[Autoplay, Navigation]}
+                            className="mySwiper"
+                        >
+                            {movies.map(item => {
+                                let imgUrl = 'https://image.tmdb.org/t/p/original/'
+                                return <SwiperSlide key={item.id}>
+                                    <div className="w-[225px] text-white ">
+                                        <div className="relative">
+                                            <img className="w-full h-[300px] mb-[20px] rounded-[10px]" src={imgUrl + item.poster_path} alt="" />
+                                            <span className="bg-[#EF4234] rounded-b-[6px] top-0 left-3 text-white absolute w-[35px] h-[35px] flex items-center justify-center">
+                                                {item.vote_average.toFixed(1)}
+                                            </span>
+                                        </div>
+                                        <div className="pl-[20px]">
+                                            <h3 className="text-[20px] line-clamp-1">{item.title}</h3>
+                                            <p>{item.release_date.slice(0, 4)}</p>
+                                        </div>
+                                    </div>
+                                </SwiperSlide>
+                            })}
+                        </Swiper>
+                    </div>
                 )}
 
             </div>
